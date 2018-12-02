@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+/*?
+ * 本来是用来做Cutting Chains 这个题的 但是思路错了 不过可以作为一个数据结构来学洗习
+ * 数据结构 Chain 用类定义  相当于C/C++/Python 里的结构体
+ * 这里 我定义了三个私有的数据型 pre相当于前指针 next相当于后指针 number可以相当于data
+ * 用了两个函数， 一个用来定义值 一个用来获取值
+ * 该题 我理解的题意 是每个Chain结点 最多只能连接两个结点 所以用了pre和next来表示 实际上这个可以不止两个 甚至更多
+ * 然后 按照我的思路来   其实没多大意义
+ * 做这个题 最终的收获 是运用了这个结构体 即'二叉树'思想 
+ * 题目是没有完成的 就作为二叉树的一个学习了 最终也是没有结果的
+ * 
+*/
+//每个集合链中的节点数据结构
+class Chain{
+	private Chain pre;
+	private Chain next;
+	private int number;
+	public void setNum(int number) {
+		this.number = number;
+	}
+	public int getNum() {
+		return number;
+	}
+	public void setPre(Chain Pre) {
+		this.pre = Pre;
+	}
+	public Chain getPre() {
+		return pre;
+	}
+	public void setNext(Chain next) {
+		this.next = next;
+	}
+	public Chain getNext() {
+		return next;
+	}
+}
+
+public class Cutting_Chains{
+	static Scanner sc = new Scanner(System.in);
+	
+ 	public static Chain[] input_Chains(int n) {//构建单个链环集合 即输入
+ 		int temp1, temp2;//按照输入格式 定义两个参数用于值得带入
+ 		temp1 = sc.nextInt()-1;
+ 		temp2 = sc.nextInt()-1;
+		Chain[] Chains = new Chain[n];//根据n定义节点 申请对应数目
+		for(int i=0; i<n; i++) {
+			Chains[i] = new Chain();//必须加！！！
+			Chains[i].setNum(i);
+		}
+		while(temp1 != -2 && temp2 != -2) {//输入循环 当temp1、temp2同时等于-1时结束
+			Chains[temp1].setNext(Chains[temp2]);
+			Chains[temp2].setPre(Chains[temp1]);
+	 		temp1 = sc.nextInt()-1;
+	 		temp2 = sc.nextInt()-1;
+		}
+		return Chains;
+ 	}
+ 	public static int compute(int loop, int line) {//通过环的数量和链的数量计算要开的数量
+ 		if(loop>=line)
+ 			return loop;
+ 		else
+ 			return line;
+ 	}
+ 	public static int dispose(Chain[] Chains) {//单个链环集合的处理 返回结果
+ 		int length = Chains.length;
+ 		int num_open;
+ 		int loop = 0;
+ 		int line = 0;
+ 		
+ 		int i=0;
+ 		while(i<length) {
+ 			
+ 		}
+ 		return(compute(loop,line));
+ 	}
+ 	public static void main(String[] args) {
+		ArrayList<Integer> set = new ArrayList<Integer>();//结果数组；
+		int N =sc.nextInt();//每个集合的第一个数字，即每个链的节点个数；
+		while(N != 0) {
+			set.add(dispose(input_Chains(N)));
+			N = sc.nextInt();
+		}
+		for(int i=0; i<set.size(); i++) {
+			System.out.printf("Set %d: Minimum links to open is %d%n",i+1,set.get(i));
+		}
+	}
+}
+
